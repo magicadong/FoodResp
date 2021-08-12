@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,8 @@ import com.example.foodresp.R
 import com.example.foodresp.databinding.FragmentRecipeBinding
 import com.example.foodresp.fragments.recipe.adapter.FoodAdapter
 import com.example.foodresp.fragments.recipe.adapter.TypeAdapter
+import com.example.foodresp.util.NetworkResult
+import com.example.foodresp.util.showToast
 import com.example.foodresp.viewmodel.MainViewModel
 
 class RecipeFragment : Fragment() {
@@ -30,11 +33,16 @@ class RecipeFragment : Fragment() {
         initTypeRecyclerView()
         initFoodRecyclerView()
         mainViewModel.recipes.observe(viewLifecycleOwner){
-            if (it.results.isNotEmpty()) {
-                //结束shimmer的加载效果
-                //binding.foodRecyclerView.hideShimmer()
-                //传递下载的数据
-                foodAdapter.setData(it.results)
+            when(it){
+                is NetworkResult.Success -> {
+                    binding.foodRecyclerView.hideShimmer()
+                    foodAdapter.setData(it.data!!.results) }
+                is NetworkResult.Loading -> {
+                    binding.foodRecyclerView.showShimmer() }
+                is NetworkResult.Error ->{
+                    binding.foodRecyclerView.hideShimmer()
+                    showToast(requireContext(),it.message!!)
+                }
             }
         }
         fetchData("main course")
@@ -42,7 +50,6 @@ class RecipeFragment : Fragment() {
         return binding.root
     }
     private fun initFoodRecyclerView(){
-        binding.foodRecyclerView.showShimmer()
         binding.foodRecyclerView.layoutManager = GridLayoutManager(
             requireContext(),2)
         binding.foodRecyclerView.adapter = foodAdapter

@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface FoodApi {
     //基地址 https://api.spoonacular.com/
-    @GET("recipes/complexSearch?addRecipeInformation=true&fillIngredients=true&apiKey=1a0edebda73f4a17ad82375357e41313")
+    @GET("recipes/complexSearch?addRecipeInformation=true&fillIngredients=true&apiKey=1a0edebda73f4a17ad82375357e41313&number=50")
     suspend fun fetchFoodRecipes(@Query("type")type:String):Response<FoodRecipe>
 }

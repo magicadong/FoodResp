@@ -19,3 +19,18 @@ data class ExtendedIngredient(
     @SerializedName("unit")
     val unit: String
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
