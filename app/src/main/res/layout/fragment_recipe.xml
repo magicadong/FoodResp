@@ -58,7 +58,7 @@
         app:srcCompat="@drawable/lookbook" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/topBanner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -73,9 +73,9 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintEnd_toEndOf="@+id/topBanner"
+        app:layout_constraintStart_toStartOf="@+id/topBanner"
+        app:layout_constraintTop_toBottomOf="@+id/topBanner" />
 
     <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/foodRecyclerView"

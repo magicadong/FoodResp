@@ -35,19 +35,29 @@ class MainViewModel(application: Application):AndroidViewModel(application) {
         //判断网络是否有连接
         if (hasInternetConnection()) {
             viewModelScope.launch {
-                try {
-                    val response = remoteRepository.fetchFoodRecipes(type)
-                    if (response.isSuccessful) {
-                        //获取数据成功 处于success状态
-                        recipes.value = NetworkResult.Success(response.body()!!)
-                        //需要将数据保存到数据库
-                        localRepository.insertRecipe(RecipeEntity(0,type,response.body()!!))
+                //先读取数据库的数据
+                val result = localRepository.getRecipes(type)
+                result.collect {
+                    if (it.isNotEmpty()) {
+                        val entity = it.first()
+                        val data = entity.recipe
+                        recipes.value = NetworkResult.Success(data)
                     } else {
-                        //获取数据失败 处于error状态
-                        recipes.value = NetworkResult.Error(response.message())
+                        try {
+                            val response = remoteRepository.fetchFoodRecipes(type)
+                            if (response.isSuccessful) {
+                                //获取数据成功 处于success状态
+                                recipes.value = NetworkResult.Success(response.body()!!)
+                                //需要将数据保存到数据库
+                                localRepository.insertRecipe(RecipeEntity(0,type,response.body()!!))
+                            } else {
+                                //获取数据失败 处于error状态
+                                recipes.value = NetworkResult.Error(response.message())
+                            }
+                        }catch (e:Exception){
+                            recipes.value = NetworkResult.Error("time out:${e.message}")
+                        }
                     }
-                }catch (e:Exception){
-                    recipes.value = NetworkResult.Error("time out:${e.message}")
                 }
             }
         }else{

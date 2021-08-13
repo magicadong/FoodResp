@@ -8,4 +8,8 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50dp</item>
     </style>
+    <style name="circleImageDetailStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">85dp</item>
+    </style>
 </resources>

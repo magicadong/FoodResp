@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,9 +48,9 @@ class RecipeFragment : Fragment() {
             }
         }
         fetchData("main course")
-
         return binding.root
     }
+
     private fun initFoodRecyclerView(){
         binding.foodRecyclerView.layoutManager = GridLayoutManager(
             requireContext(),2)
