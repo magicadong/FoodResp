@@ -8,15 +8,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodresp.data.locol.LocalRepository
-import com.example.foodresp.data.locol.RecipeEntity
+import com.example.foodresp.data.locol.entity.RecipeEntity
 import com.example.foodresp.data.model.FoodRecipe
-import com.example.foodresp.data.remote.FoodApi
 import com.example.foodresp.data.remote.RemoteRepository
 import com.example.foodresp.util.NetworkResult
-import com.example.foodresp.util.showToast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.lang.Exception
 
 class MainViewModel(application: Application):AndroidViewModel(application) {

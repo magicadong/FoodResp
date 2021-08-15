@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.foodresp.R
 import com.example.foodresp.databinding.FragmentSummaryBinding
+import org.jsoup.Jsoup
 
 class SummaryFragment(private val summary:String) : Fragment() {
     private lateinit var binding:FragmentSummaryBinding
@@ -16,7 +17,7 @@ class SummaryFragment(private val summary:String) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSummaryBinding.inflate(inflater)
-        binding.summaryTextView.text = summary
+        binding.summaryTextView.text = Jsoup.parse(summary).text()
         return binding.root
     }
 

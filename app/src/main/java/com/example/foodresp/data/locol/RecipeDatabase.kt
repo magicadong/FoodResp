@@ -5,12 +5,18 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.foodresp.data.locol.dao.RecipeDao
+import com.example.foodresp.data.locol.entity.FavoriteEntity
+import com.example.foodresp.data.locol.entity.RecipeEntity
 import com.example.foodresp.util.RecipeTypeConverter
 
 @TypeConverters(RecipeTypeConverter::class)
-@Database(entities = [RecipeEntity::class],version = 1,exportSchema = false)
+@Database(
+    entities = [RecipeEntity::class, FavoriteEntity::class],
+    version = 1,
+    exportSchema = false)
 abstract class RecipeDatabase: RoomDatabase() {
-    abstract fun getRecipeDao():RecipeDao
+    abstract fun getRecipeDao(): RecipeDao
 
     companion object{
         private var instance:RecipeDatabase? = null

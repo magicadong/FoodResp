@@ -5,15 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.example.foodresp.databinding.FragmentDetailBinding
 import com.example.foodresp.fragments.recipe.adapter.ViewPagerAdapter
+import com.example.foodresp.viewmodel.FavoriteViewModel
 
 
 class DetailFragment : Fragment() {
     private lateinit var binding:FragmentDetailBinding
     private val recipeArgs:DetailFragmentArgs by navArgs()
+    private val favoriteViewModel:FavoriteViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +33,15 @@ class DetailFragment : Fragment() {
         binding.executePendingBindings()
         initEvent()
         initViewPager()
+        favoriteViewModel.readFavorites()
+        favoriteViewModel.favoriteRecipes.observe(viewLifecycleOwner){
+            it.forEach { entity ->
+                if(entity.result == recipeArgs.recipe){
+                    binding.collectBtn.isSelected = true
+                    return@forEach
+                }
+            }
+        }
     }
     private fun initViewPager(){
         val fragments = listOf(
@@ -49,6 +61,21 @@ class DetailFragment : Fragment() {
         binding.ingredientsBtn.setOnClickListener {
             selectIngredient()
             binding.viewPager.currentItem = 1
+        }
+        binding.collectBtn.setOnClickListener {
+            if (binding.collectBtn.isSelected){
+                //从数据库收藏表中删除这个食谱
+                favoriteViewModel.favoriteRecipes.value?.forEach { entity ->
+                    if (entity.result == recipeArgs.recipe){
+                        favoriteViewModel.deleteFavorite(entity)
+                        binding.collectBtn.isSelected = false
+                    }
+                }
+            }else{
+                //将这个食谱插入到收藏表中
+                favoriteViewModel.insertFavorite(recipeArgs.recipe)
+                binding.collectBtn.isSelected = true
+            }
         }
 
         binding.viewPager.registerOnPageChangeCallback(object:ViewPager2.OnPageChangeCallback(){

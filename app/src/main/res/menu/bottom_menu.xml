@@ -12,14 +12,14 @@
     <item
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_start"
-        android:title="Recipes"
+        android:title="Favorite"
         app:showAsAction="ifRoom"
         android:iconTint="#7C7B7E"
         tools:targetApi="o"/>
     <item
         android:id="@+id/otherFragment"
         android:icon="@drawable/ic_other"
-        android:title="Recipes"
+        android:title="Others"
         app:showAsAction="ifRoom"
         android:iconTint="#7C7B7E"
         tools:targetApi="o"/>

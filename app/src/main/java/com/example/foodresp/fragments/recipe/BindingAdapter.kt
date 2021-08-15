@@ -2,6 +2,7 @@ package com.example.foodresp.fragments.recipe
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
@@ -25,7 +26,8 @@ object BindingAdapter {
     fun loadIngredientImageWithName(imageView:ImageView,name:String){
         //将url对应的图片下载下来 显示到imageView上
         //Glide
-        val imageBaseUrl = "https://spoonacular.com/recipeImages/"
+        //https://spoonacular.com/cdn/ingredients_250x250/
+        val imageBaseUrl = "https://spoonacular.com/cdn/ingredients_250x250/"
         Glide.with(imageView.context)
             .load(imageBaseUrl+name)
             .placeholder(R.drawable.ic_launcher_background)
@@ -34,8 +36,8 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("changeStatus")
-    fun changeStatus(chip:Chip,status:Boolean){
-        chip.isSelected = status
+    fun changeStatus(textView: TextView, status:Boolean){
+        textView.isSelected = status
     }
 
     @JvmStatic
