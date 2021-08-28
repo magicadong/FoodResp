@@ -12,8 +12,8 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>(){
     class MyViewHolder(val binding: FavoriteItemBinding): RecyclerView.ViewHolder(binding.root){
         companion object{
             fun from(parent: ViewGroup):MyViewHolder{
-                val inflator = LayoutInflater.from(parent.context)
-                val binding = FavoriteItemBinding.inflate(inflator)
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = FavoriteItemBinding.inflate(inflater,parent,false)
                 return MyViewHolder(binding)
             }
         }
